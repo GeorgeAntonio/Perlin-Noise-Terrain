@@ -15,14 +15,15 @@ public class PerlinNoise : MonoBehaviour
         offsetY = Random.Range(0f, 99999f);
     }
 
-    void Upadte()
+    void Update()
     {
         Terrain terrain = GetComponent<Terrain>();
-        terrain.terrainData = GenerateTerrain();
+        TerrainData terrainData = terrain.terrainData; // Get the TerrainData from the Terrain component
+        terrainData = GenerateTerrain(terrainData); // Pass the terrainData to the method
         offsetX += Time.deltaTime * 5f;
     }
 
-    TerrainData GenerateTerrain (TerrainData terrainData)
+    TerrainData GenerateTerrain(TerrainData terrainData)
     {
         terrainData.heightmapResolution = width + 1;
         terrainData.size = new Vector3(width, depth, height);
@@ -37,7 +38,7 @@ public class PerlinNoise : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                height[x, y] = CalculateHeight(x, y);
+                heights[x, y] = CalculateHeight(x, y); // Corrected the variable name to heights
             }
         }
         return heights;
